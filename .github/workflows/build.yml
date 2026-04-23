@@ -2,6 +2,10 @@ name: Build iOS App
 
 on: [push, workflow_dispatch]
 
+# Adding this line forces GitHub to use the newer Node 24 and stops the warning!
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: macos-latest
