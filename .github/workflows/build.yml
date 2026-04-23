@@ -1,0 +1,39 @@
+name: Build iOS App
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode Project
+        run: xcodegen generate
+
+      - name: Build Unsigned App
+        run: |
+          xcodebuild clean build \
+            -project mbiof.xcodeproj \
+            -scheme mbiof \
+            -configuration Release \
+            -sdk iphoneos \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            SYMROOT=$(PWD)/build
+
+      - name: Package to IPA
+        run: |
+          mkdir -p Payload
+          mv build/Release-iphoneos/mbiof.app Payload/
+          zip -r mbiof.ipa Payload
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mbiof-ipa
+          path: mbiof.ipa

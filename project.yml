@@ -1,0 +1,23 @@
+name: mbiof
+options:
+  bundleIdPrefix: com.yourname
+targets:
+  mbiof:
+    type: application
+    platform: iOS
+    version: 1.0.0
+    deploymentTarget: "15.0"
+    sources: [Sources]
+    info:
+      properties:
+        UILaunchScreen: {}
+        NSHealthShareUsageDescription: "We need heart rate data to display your pulse."
+        NSHealthUpdateUsageDescription: "We need heart rate data to display your pulse."
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+    entitlements:
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: ["health-records"]
