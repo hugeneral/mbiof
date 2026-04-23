@@ -7,8 +7,10 @@ targets:
     platform: iOS
     version: 1.0.0
     deploymentTarget: "15.0"
-    sources: [Sources]
+    sources:
+      - Sources
     info:
+      path: Info.plist   # <--- (Added this)
       properties:
         UILaunchScreen: {}
         NSHealthShareUsageDescription: "We need heart rate data to display your pulse."
@@ -18,6 +20,7 @@ targets:
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
     entitlements:
+      path: mbiof.entitlements   # <--- (Added this)
       properties:
         com.apple.developer.healthkit: true
         com.apple.developer.healthkit.access: ["health-records"]
